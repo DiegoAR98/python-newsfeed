@@ -11,6 +11,11 @@ class User(Base):
   username = Column(String(50), nullable=False)
   email = Column(String(50), nullable=False, unique=True)
   password = Column(String(100), nullable=False)
+  def verify_password(self, password):
+   return bcrypt.checkpw(
+    password.encode('utf-8'),
+    self.password.encode('utf-8')
+  )
 
   @validates('email')
   def validate_email(self, key, email):
