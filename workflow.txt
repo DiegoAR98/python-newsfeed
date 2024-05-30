@@ -1,0 +1,19 @@
+# Navigate to your project directory
+cd C:\Users\your_username\path\to\your\project
+
+# Create a virtual environment (if not already created)
+python -m venv venv
+
+# Activate the virtual environment
+.\venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Work on your project...
+
+# Run the Flask app
+flask run
+
+# Deactivate the virtual environment when done
+deactivate
