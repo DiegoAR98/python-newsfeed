@@ -20,14 +20,14 @@
 {% if posts|length > 0 %}
 <section>
   <h2>Your Posts</h2>
-  <ol>
+  <ul>
     {% for post in posts %}
     <li>
       {% include "partials/post-info.html" %}
       <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
     </li>
     {% endfor %}
-  </ol>
+  </ul>
 </section>
 {% endif %}
 

@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, session, redirect
 from app.models import Post
 from app.db import get_db
+from sqlalchemy import func
+from app.models import Vote
 
 bp = Blueprint('home', __name__, url_prefix='/')
 
@@ -8,7 +10,16 @@ bp = Blueprint('home', __name__, url_prefix='/')
 def index():
   # get all posts
   db = get_db()
-  posts = db.query(Post).order_by(Post.created_at.desc()).all()
+  posts = (
+    db.query(Post)
+      .outerjoin(Vote, Vote.post_id == Post.id)
+      .group_by(Post.id)
+      .order_by(
+        func.count(Vote.id).desc(),     # most upvotes first
+        Post.created_at.desc()          # tie-breaker: newest first
+      )
+      .all()
+)
   return render_template(
   'homepage.html',
   posts=posts,

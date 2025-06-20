@@ -3,7 +3,8 @@
     <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>
     <span>({{post.post_url|format_url}})</span>
     </div>
-  <div class="meta">
-    {{post.vote_count}} {{post.vote_count|format_plural('point')}} by {{post.user.username}} on {{post.created_at|format_date}}    |
-    <a href="/post/{{post.id}}">{{post.comments|length}} {{post.comments|length|format_plural('comment')}}</a>  </div>
+    <div class="meta">
+    {{ post.votes|length }} {{ post.votes|length|format_plural('upvote') }} by {{post.user.username}} on {{post.created_at|format_date}} |
+    <a href="/post/{{post.id}}">{{post.comments|length}} {{post.comments|length|format_plural('comment')}}</a>
+  </div>
 </article>
