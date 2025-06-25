@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify, session
 from app.models import User, Post, Comment, Vote
 from app.db import get_db
 from app.utils.auth import login_required  # Import the login_required decorator
+from sqlalchemy.exc import IntegrityError
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -11,30 +12,31 @@ def signup():
     data = request.get_json()
     db = get_db()
 
-    try:
-        # attempt creating a new user
-        newUser = User(
-            username=data['username'],
-            email=data['email'],
-            password=data['password']
-        )
+    newUser = User(
+        username=data['username'],
+        email=data['email'],
+        password=data['password']
+    )
+    db.add(newUser)
 
-        db.add(newUser)
+    try:
         db.commit()
-    except:
-        print(sys.exc_info()[0])
+    except IntegrityError:
+        db.rollback()
+        # 409 Conflict is appropriate for duplicates
+        return jsonify(message='Username or email already in use'), 409
+    except Exception:
         db.rollback()
         return jsonify(message='Signup failed'), 500
 
     session.clear()
     session['user_id'] = newUser.id
     session['loggedIn'] = True
-
     return jsonify(id=newUser.id)
 
 @bp.route('/users/logout', methods=['POST'])
 def logout():
-    # remove session variables
+    # clear the session
     session.clear()
     return '', 204
 

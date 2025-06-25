@@ -34,6 +34,13 @@ def login():
 
   return redirect('/dashboard')
 
+@bp.route('/signup')
+def signup_page():
+    # if they’re already logged in, bounce to dashboard
+    if session.get('loggedIn'):
+        return redirect('/dashboard')
+    return render_template('signup.html')
+
 @bp.route('/post/<id>')
 def single(id):
   # get single post by id

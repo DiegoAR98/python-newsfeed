@@ -1,6 +1,14 @@
 {% extends "layout/main.html" %}
 
 {% block body %}
+<section class="new-post-cta">
+  {% if loggedIn %}
+    <a href="/dashboard" class="btn">+ Create New Post</a>
+  {% else %}
+    <a href="/signup" class="btn">Sign up to post</a>
+  {% endif %}
+</section>
+
 <ul class="post-list">
   {% for post in posts %}
   <li>
