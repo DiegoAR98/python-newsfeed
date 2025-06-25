@@ -3,6 +3,7 @@ from app.models import Post
 from app.db import get_db
 from sqlalchemy import func
 from app.models import Vote
+from app.utils.news import get_tech_news
 
 bp = Blueprint('home', __name__, url_prefix='/')
 
@@ -20,9 +21,11 @@ def index():
       )
       .all()
 )
+  tech_feed = get_tech_news()
   return render_template(
   'homepage.html',
   posts=posts,
+  tech_feed=tech_feed,
   loggedIn=session.get('loggedIn')
 )
 

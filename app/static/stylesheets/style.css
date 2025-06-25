@@ -210,3 +210,38 @@ footer {
   header { flex-direction: column; align-items: flex-start; }
   header nav { margin-top: 0.5rem; }
 }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.feed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feed-list li {
+  margin-bottom: 0.5rem;
+}
+
+.feed-list a {
+  font-size: 0.95rem;
+  color: #225ca3;
+}
+
+@media (max-width: 800px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar { display: none; }
+}

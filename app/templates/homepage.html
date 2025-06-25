@@ -1,19 +1,50 @@
 {% extends "layout/main.html" %}
 
 {% block body %}
-<section class="new-post-cta">
-  {% if loggedIn %}
-    <a href="/dashboard" class="btn">+ Create New Post</a>
-  {% else %}
-    <a href="/signup" class="btn">Sign up to post</a>
-  {% endif %}
-</section>
+  <!-- Call-to-Action -->
+  <section class="new-post-cta">
+    {% if loggedIn %}
+      <a href="/dashboard" class="btn">+ Create New Post</a>
+    {% else %}
+      <a href="/signup" class="btn">Sign up to post</a>
+    {% endif %}
+  </section>
 
-<ul class="post-list">
-  {% for post in posts %}
-  <li>
-    {% include "partials/post-info.html" %}
-  </li>
-  {% endfor %}
-</ul>
+  <!-- 3-column layout: left sidebar, posts, right sidebar -->
+  <div class="content-grid">
+    <!-- Left sidebar: top 5 tech headlines -->
+    <aside class="sidebar">
+      <h3>Tech News</h3>
+      <ul class="feed-list">
+        {% for item in tech_feed[:5] %}
+          <li>
+            <a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <!-- Main feed: your posts -->
+    <main>
+      <ul class="post-list">
+        {% for post in posts %}
+          <li>
+            {% include "partials/post-info.html" %}
+          </li>
+        {% endfor %}
+      </ul>
+    </main>
+
+    <!-- Right sidebar: next 5 tech headlines -->
+    <aside class="sidebar">
+      <h3>More Headlines</h3>
+      <ul class="feed-list">
+        {% for item in tech_feed[5:10] %}
+          <li>
+            <a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+  </div>
 {% endblock %}
